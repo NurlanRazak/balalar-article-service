@@ -4,16 +4,21 @@ public class Trends {
     private String podcastId;
     private String articleId;
     private String trendId;
+    private String categoryName;
+    private String tags;
 
-    public Trends(String podcastId, String articleId, String trendId) {
+    public Trends(String podcastId, String articleId, String trendId, String categoryName, String tags) {
         this.podcastId = podcastId;
         this.articleId = articleId;
-        this.trendId = this.trendId;
+        this.trendId = trendId;
+        this.categoryName = categoryName;
+        this.tags = tags;
     }
 
     public Trends() {
 
     }
+
 
     public String getPodcastId() {
         return podcastId;
@@ -37,5 +42,21 @@ public class Trends {
 
     public void setTrendId(String trendId) {
         this.trendId = trendId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 }
