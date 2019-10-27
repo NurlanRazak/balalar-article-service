@@ -1,6 +1,7 @@
 package kz.balalar.balalararticleservice.services;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import kz.balalar.balalararticleservice.models.ArticleItem;
 import kz.balalar.balalararticleservice.models.Comment;
 import kz.balalar.balalararticleservice.models.PodcastItem;
@@ -16,7 +17,14 @@ public class ArticleItenInfo {
     private RestTemplate restTemplate;
 
 
-    @HystrixCommand(fallbackMethod = "getFallbackArticleCommentPodcastItem")
+    @HystrixCommand(
+            fallbackMethod = "getFallbackArticleCommentPodcastItem",
+            threadPoolKey = "articleItemPool",
+            threadPoolProperties = {
+                    @HystrixProperty(name="coreSize", value="20"),
+                    @HystrixProperty(name="maxQueueSize", value="10"),
+            }
+    )
     public ArticleItem getArticleItem(Trends trend) {
         Comment comment = restTemplate.getForObject("http://balalar-comments-service/comments/" + trend.getTrendId(), Comment.class);
         PodcastItem podcast = restTemplate.getForObject("http://balalar-podcasts-service/podcast/" + trend.getTrendId(), PodcastItem.class);
